@@ -1,0 +1,49 @@
+.jobCard{
+  gap: 1rem;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  align-items: flex-start;
+  
+  h3{
+    display: flex;
+    align-items:flex-start;
+    text-align: left;
+    padding: 0.5rem 0;
+  }
+
+  small{
+    display: flex;
+    text-align: left;
+    align-items:flex-start;
+    color: var(--social-bg);
+  }
+  p{
+    text-align: left;
+    align-items:flex-start;
+    padding: 0.5rem 0;
+  }
+  button{
+    display: flex;
+    align-items: flex-start;
+    margin-top: 1rem;
+    margin-left: auto;
+  }
+}
+
+.button-apply-job{
+  background-color: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.isApplied{
+  background-color: var(--accent-border);
+  color: var(--white);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: not-allowed;
+}

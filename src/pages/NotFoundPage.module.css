@@ -1,0 +1,126 @@
+
+
+.containerNotFoundPage{
+    text-align:center;
+    z-index:2;
+    animation:fadeIn 1s ease;
+    align-content: center;
+    height: 500px;
+}
+
+.containerNotFoundPage h1{
+    font-size:10rem;
+    color:#38bdf8;
+    text-shadow:0 0 20px rgba(56,189,248,.5);
+    animation:float 3s ease-in-out infinite;
+    margin: 100px;
+}
+
+.containerNotFoundPage h2{
+    font-size:2.3rem;
+    margin-bottom:15px;
+}
+
+.containerNotFoundPage p{
+    color:#cbd5e1;
+    font-size:1.1rem;
+    max-width:500px;
+    margin:0 auto 35px;
+    line-height:1.6;
+}
+
+.containerNotFoundPage a{
+    display:inline-block;
+    text-decoration:none;
+    color:#fff;
+    background:#38bdf8;
+    padding:14px 35px;
+    border-radius:10px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.containerNotFoundPage a:hover{
+    background:#0ea5e9;
+    transform:translateY(-4px);
+    box-shadow:0 10px 25px rgba(14,165,233,.4);
+}
+
+/* Fondo decorativo */
+.circle{
+    position:absolute;
+    border-radius:50%;
+    background:rgba(56,189,248,.08);
+    animation:move 15s linear infinite;
+    
+}
+
+.circle:nth-child(1){
+    width:350px;
+    height:350px;
+    top:-120px;
+    left:-100px;
+}
+
+.circle:nth-child(2){
+    width:250px;
+    height:250px;
+    bottom:-80px;
+    right:-80px;
+    animation-duration:18s;
+}
+
+.circle:nth-child(3){
+    width:180px;
+    height:180px;
+    top:20%;
+    right:15%;
+    animation-duration:12s;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-12px);
+    }
+}
+
+@keyframes move{
+    0%{
+        transform:rotate(0deg) translateY(0);
+    }
+    50%{
+        transform:rotate(180deg) translateY(30px);
+    }
+    100%{
+        transform:rotate(360deg) translateY(0);
+    }
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:768px){
+    .containerNotFoundPage h1{
+        font-size:7rem;
+    }
+
+    .containerNotFoundPage h2{
+        font-size:1.8rem;
+    }
+
+    .containerNotFoundPage p{
+        width:90%;
+        font-size:1rem;
+    }
+}
