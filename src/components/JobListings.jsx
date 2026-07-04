@@ -7,6 +7,11 @@ export function JobListings({jobs}) {
     <>
         <h2>Job Listings</h2>
         <div className={styles.jobListings}>
+          {
+            jobs.length === 0 && (
+              <p>No se han encontrado empleos que coincidan con los criterios de busqueda</p>
+            )
+          }
           {jobs.map(job => (
             <JobCard 
               key={job.id}
