@@ -5,7 +5,7 @@ import { useState } from 'react'
 import '../index.css'
 import { useRouter } from '../hooks/useRouter.jsx'
 
-export function HomePage() {
+export default function HomePage() {
   const { navigateTo } = useRouter()
 
   const handleSearch = (e) => {
@@ -67,19 +67,3 @@ export function HomePage() {
     
   )
 }
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <Header />
-        
-        <Home />
-      
-      <Footer />
-    </>
-  )
-}
-
-export default App

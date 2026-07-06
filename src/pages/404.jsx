@@ -1,6 +1,7 @@
 import styles from './NotFoundPage.module.css';
+import { NavLink } from 'react-router';
 
-export function NotFoundPage (){
+export default function NotFoundPage (){
     return(
         <>
         
@@ -14,7 +15,7 @@ export function NotFoundPage (){
                 or is temporarily unavailable.
             </p>
 
-            <a href="/">← Back to Home</a>
+            <NavLink to="/">← Back to Home</NavLink>
         </main>
         </>
     )

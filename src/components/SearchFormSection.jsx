@@ -11,7 +11,7 @@ const useSearchForm = ({ idTechnology, idLocation, idExperienceLevel, idText, on
     
     const formData = new FormData(e.currentTarget)
 
-    if (event.target.name === idText){
+    if (e.target.name === idText){
       return
     }
 
@@ -54,7 +54,6 @@ export function SearchFormSection({ onSearch, onTextFilter, initialText }) {
   const inputRef = useRef()
 
   const { 
-    searchText, 
     handleSubmit, 
     handleTextChange 
   } = useSearchForm({ idTechnology, idLocation, idExperienceLevel, idText, onSearch, onTextFilter })
@@ -81,7 +80,7 @@ export function SearchFormSection({ onSearch, onTextFilter, initialText }) {
             defaultValue={initialText}
           />
 
-          <button type="submit">Search</button>
+          
           <button type="submit" onClick={handleClearInput}>Borrar</button>
           </div>
 

@@ -1,5 +1,8 @@
 import styles from './JobCard.module.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Link } from "./Link"
+import { NavLink } from 'react-router';
+
 
 export function JobCard ({ job }) {
   const [isApplied, setIsApplied] = useState(false);
@@ -19,13 +22,22 @@ export function JobCard ({ job }) {
         data-technology={job.data.techhnology} 
         >
         <div>
-            <h3>{job.titulo}</h3>
+            <h3>
+              <NavLink className={styles.titleLink}  to={`/jobs/${job.id}`}>
+                {job.titulo}
+              </NavLink>
+            </h3>
             <small>{job.empresa} | {job.ubicacion}</small>
             <p>{job.descripcion}</p>
         </div>
-      <button type="button" className={buttonClasses} onClick={handleApplyClick}>
-        {buttonText}
-      </button>
+      <div className={styles.linksNav}>
+        <NavLink className={styles.details} to={`/jobs/${job.id}`}>
+          Ver detalles
+        </NavLink>
+        <button type="button" className={buttonClasses} onClick={handleApplyClick}>
+          {buttonText}
+        </button>
+      </div>
     </article>
   );
 }

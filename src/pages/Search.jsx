@@ -1,29 +1,29 @@
 import { useEffect, useState } from 'react'
 import { Pagination } from '../components/Pagination.jsx'
 import { SearchFormSection } from '../components/SearchFormSection.jsx'
+import { useSearchParams } from 'react-router'
 import { JobListings } from '../components/JobListings.jsx'
-import jobsData from '../data.json'
 import { useRouter } from '../hooks/useRouter.jsx'
 
 const RESULTS_PER_PAGE = 5;
 
 const useFilters = () => {
+  const [searchParams, setSearchParams] = useSearchParams()
+
   const [filters, setFilters] = useState(() =>{
-    const params = new URLSearchParams(window.location.search)
     return{
-      technology: params.get('technology') || '',
-      location: params.get('type') || '',
-      experienceLevel: params.get('level') || ''
+      technology: searchParams.get('technology') || '',
+      location: searchParams.get('type') || '',
+      experienceLevel: searchParams.get('level') || ''
     }
   })
 
-  const [textToFilter, setTextToFilter] = useState(() =>{
-    const params = new URLSearchParams(window.location.search)
-    return params.get('text') || ''
-  })
+
+
+  const [textToFilter, setTextToFilter] = useState(() => searchParams.get('text') || '')
   const [currentPage, setCurrentPage] = useState(() =>{
-    const params = new URLSearchParams(window.location.search)
-    const page = Number(params.get('page'))
+    const searchParams = new URLSearchParams(window.location.search)
+    const page = Number(searchParams.get('page'))
     return Number.isNaN(page) ? page : 1
   });
 
@@ -38,17 +38,17 @@ const useFilters = () => {
       try {
         setLoading(true)
 
-        const params = new URLSearchParams()
-        if (textToFilter) params.append('text', textToFilter)
-        if (filters.technology) params.append('technology', filters.technology)
-        if (filters.location) params.append('type', filters.location)
-        if (filters.experienceLevel) params.append('level', filters.experienceLevel)
+        const searchParams = new URLSearchParams()
+        if (textToFilter) searchParams.append('text', textToFilter)
+        if (filters.technology) searchParams.append('technology', filters.technology)
+        if (filters.location) searchParams.append('type', filters.location)
+        if (filters.experienceLevel) searchParams.append('level', filters.experienceLevel)
 
         const offset = (currentPage - 1) * RESULTS_PER_PAGE
-        params.append('limit', RESULTS_PER_PAGE)
-        params.append('offset', offset)
+        searchParams.append('limit', RESULTS_PER_PAGE)
+        searchParams.append('offset', offset)
 
-        const queryParams = params.toString()
+        const queryParams = searchParams.toString()
 
         const response = await fetch(`https://jscamp-api.vercel.app/api/jobs?${queryParams}`)
         const json = await response.json()
@@ -66,22 +66,22 @@ const useFilters = () => {
   }, [filters, textToFilter, currentPage])
 
   useEffect(() =>{
-    const params = new URLSearchParams()
-
-    if (textToFilter) params.append('text', textToFilter)
-    if (filters.technology) params.append('technology', filters.technology)
-    if (filters.location) params.append('type', filters.location)
-    if (filters.experienceLevel) params.append('level', filters.experienceLevel)
+    setSearchParams((params) =>{
+      if (textToFilter) searchParams.set('text', textToFilter)
+      if (filters.technology) searchParams.set('technology', filters.technology)
+      if (filters.location) searchParams.set('type', filters.location)
+      if (filters.experienceLevel) searchParams.set('level', filters.experienceLevel)
+      
+      if (currentPage > 1) searchParams.set('page', currentPage)
+      
+      const newUrl = searchParams.toString()
+        ? `${window.location.pathname}?${searchParams.toString()}`
+        : window.location.pathname
+      
+      return params
+    })
     
-    if (currentPage > 1) params.append('page', currentPage)
-    
-    const newUrl = params.toString()
-      ? `${window.location.pathname}?${params.toString()}`
-      : window.location.pathname
-    
-    navigateTo(newUrl)
-    
-  }, [filters, textToFilter, currentPage, navigateTo])
+  }, [filters, textToFilter, currentPage, setSearchParams])
 
   const totalPages = Math.ceil(total / RESULTS_PER_PAGE);
 
@@ -112,7 +112,7 @@ const useFilters = () => {
   }
 }
 
-export function SearchPage() {
+export default function SearchPage() {
   const {
     jobs,
     loading,
@@ -124,10 +124,6 @@ export function SearchPage() {
     handleSearch,
     handleTextFilter
   } = useFilters()
-
-  useEffect(() => {
-    document.title = `Resultados: ${total}, Pagina: ${currentPage} - Devjobs` 
-  }, [jobs, currentPage]) 
 
   const title = loading 
   ? `Cargando... - DevJobs` 
