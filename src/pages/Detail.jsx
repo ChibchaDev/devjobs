@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useParams } from "react-router"
 import { Link } from "../components/Link"
 import { NavLink } from "react-router"
 import styles from "./Detail.module.css"
 import snarkdown from 'snarkdown'
+import { useAuth } from "../context/AuthContext"
 
 function JobSection({title, content}){
     const html = snarkdown(content)
@@ -23,7 +24,51 @@ function JobSection({title, content}){
     )
 }
 
-export default function JobDetail(){
+function DetailPageBreadCrumb ({ job }) {
+    return (
+        <div className={styles.container}>
+            <nav className={styles.breadcrumb}>
+                <NavLink 
+                    to="/search"
+                    className={styles.breadcrumbButton}
+                >
+                    Empleos
+                </NavLink>
+                <span className={styles.breadcrumbSeparator}>/</span>
+                <span className={styles.breadcrumbCurrent}>{job.titulo}</span>
+            </nav>
+        </div>
+    )
+}
+
+function DetailPageHeader ({ job, isLoggedIn }) {
+    return(
+    <>
+    <header className={styles.header}>
+        <h1 className={styles.title}>
+            {job.titulo}
+        </h1>
+        <p className={styles.meta}>
+            {job.empresa} - {job.ubicacion}
+        </p>
+    </header>
+
+    <DetailApplyButton isLoggedIn={ isLoggedIn }/>
+    </>
+    )
+}
+
+function DetailApplyButton () {
+    const { isLoggedIn } = useAuth()
+
+    return (
+        <button disabled={!isLoggedIn} className={styles.applyButton}>
+            {isLoggedIn ? "Aplicar ahora" : "Inicia sesión para aplicar"}
+        </button>
+    )
+}
+
+export default function JobDetail({ isLoggedIn }){
     const { jobId } = useParams()
 
     const [job, setJob] = useState(null)
@@ -73,31 +118,8 @@ export default function JobDetail(){
     
     return(
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem' }}>
-            <div className={styles.container}>
-                <nav className={styles.breadcrumb}>
-                    <NavLink 
-                        to="/search"
-                        className={styles.breadcrumbButton}
-                    >
-                        Empleos
-                    </NavLink>
-                    <span className={styles.breadcrumbSeparator}>/</span>
-                    <span className={styles.breadcrumbCurrent}>{job.titulo}</span>
-                </nav>
-            </div>
-
-            <header className={styles.header}>
-                <h1 className={styles.title}>
-                    {job.titulo}
-                </h1>
-                <p className={styles.meta}>
-                    {job.empresa} - {job.ubicacion}
-                </p>
-            </header>
-
-            <button className={styles.applyButton}>
-                Aplicar ahora
-            </button>
+            <DetailPageBreadCrumb job= { job } />
+            <DetailPageHeader job={job} isLoggedIn={isLoggedIn} />
 
             <JobSection title="Descripcion del puesto" content={job.content.description}/>
             <JobSection title="Responsabilidades" content={job.content.responsibilities}/>

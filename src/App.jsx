@@ -2,7 +2,7 @@
 import { Header } from './components/Header.jsx'
 import { Footer } from './components/Footer.jsx'
 import { Routes, Route } from 'react-router'
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useState } from 'react'
 
 const HomePage = lazy(()=> import('./pages/Home.jsx'))
 const SearchPage = lazy(()=> import('./pages/Search.jsx'))
