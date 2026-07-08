@@ -1,8 +1,5 @@
-
-import { Header } from '../components/Header.jsx'
-import { Footer } from '../components/Footer.jsx'
 import { useState } from 'react'
-import '../index.css'
+import styles from './Home.module.css'
 import { useRouter } from '../hooks/useRouter.jsx'
 
 export default function HomePage() {
@@ -22,14 +19,14 @@ export default function HomePage() {
 
   return (
     <main>
-      <section className="heroSection">
+      <section className={styles.heroSection}>
         <h1>Encuentra tu proximo trabajo</h1>
         <p>Únete a las mejores empresas tecnológicas.
           Miles de ofertas de trabajo remoto y presencial 
           para ingenieros de software, diseñadores y 
           product managers.</p>
 
-          <form role="search" className='formSearch' onSubmit={handleSearch} >
+          <form role="search" className={styles.formSearch} onSubmit={handleSearch} >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
 
           <input name="search" type="text" placeholder="Job title or keyword" />
@@ -38,12 +35,12 @@ export default function HomePage() {
         </form>
       </section>
 
-      <section className="informationSection">
+      <section className={styles.informationSection}>
         <header>
           <h2>Job Listings</h2>
         </header>
 
-        <footer>
+        <footer className={styles.cardSection}>
           <article>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-briefcase"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" /><path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" /><path d="M12 12l0 .01" /><path d="M3 13a20 20 0 0 0 18 0" /></svg>
             <h3>Frontend Developer</h3>

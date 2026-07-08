@@ -4,7 +4,9 @@ import { Link } from "../components/Link"
 import { NavLink } from "react-router"
 import styles from "./Detail.module.css"
 import snarkdown from 'snarkdown'
-import { useAuth } from "../context/AuthContext"
+import { useAuth } from "../context/AuthContext.jsx"
+import { useAuthStore } from "../store/authStore.js"
+import { useFavoritesStore } from "../store/favoritesStore.js"
 
 function JobSection({title, content}){
     const html = snarkdown(content)
@@ -54,18 +56,48 @@ function DetailPageHeader ({ job, isLoggedIn }) {
     </header>
 
     <DetailApplyButton isLoggedIn={ isLoggedIn }/>
+    <DetailFavoriteButton jobId ={job.id} />
     </>
     )
 }
 
 function DetailApplyButton () {
-    const { isLoggedIn } = useAuth()
+    const { isLoggedIn } = useAuthStore()
 
     return (
         <button disabled={!isLoggedIn} className={styles.applyButton}>
             {isLoggedIn ? "Aplicar ahora" : "Inicia sesión para aplicar"}
         </button>
     )
+}
+
+function DetailFavoriteButton ({jobId}){
+    const { toggleFavorite, isFavorite } = useFavoritesStore()
+    const { isLoggedIn } = useAuthStore()
+    
+      const HeartIcon = () => (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={16}
+        height={16}
+        viewBox="0 0 24 24"
+        fill={isFavorite(jobId) ? 'red' : 'none'}
+        stroke="red"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="icon icon-tabler icons-tabler-outline icon-tabler-heart"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+      </svg>
+      );
+    
+      return(
+        <button disabled={!isLoggedIn}  onClick={() => toggleFavorite(jobId)}>
+          {isFavorite(jobId) ? <HeartIcon /> : '🤍' }
+        </button> 
+      )
 }
 
 export default function JobDetail({ isLoggedIn }){

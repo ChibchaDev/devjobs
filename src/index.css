@@ -85,46 +85,7 @@ code {
   background: var(--code-bg);
 }
 
-.heroSection {
-  position: relative;
-  width: 100%;
-  height: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  overflow: hidden;
-  background-image: linear-gradient(#060e20b0 20%), url("./background.png");
-  background-color: #060e20db;
-  background-size: cover;
-  background-position: center;
-  padding: 0 20px;
-}
 
-form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 16px;
-  background-color: #0B1326;
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid var(--border);
-}
-
-form > svg {
-  margin-right: 8px;
-  color: var(--border);
-}
-
-input[type="text"] {
-  padding: 8px;
-  border-radius: 4px;
-  width: 300px;
-  border: 1px solid var(--border);
-  background-color: #172033;
-}
 
 button {
   background-color: var(--primary);
@@ -141,47 +102,6 @@ button {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
     color: var(--bg);
-  }
-}
-
-.informationSection {
-  padding: 20px;
-
-  header {
-    justify-content: center;
-  }
-
-  footer{
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
-}
-
-
-article {
-  text-align: center;
-  max-width: 100%;
-  padding: 1rem;
-  justify-content: center;
-  background-color: var(--card-bg);
-  margin: 10px;
-  border-radius: 0.5rem;
-  box-shadow: var(--shadow);
-
-  svg {
-    width: 48px;
-    height: 48px;
-    color: var(--primary);
-    background: var(--border);
-    border-radius: 50%;
-    padding: 8px;
-  }
-}
-
-@media (max-width: 700px) {
-  .formSearch{
-    flex-direction: column;
-    gap: .5rem;
   }
 }
 

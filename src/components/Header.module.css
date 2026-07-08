@@ -6,10 +6,16 @@
   background-color: var(--card-bg);
 }
 
-nav a {
+.navHeader a {
   color: var(--secondary);
   text-decoration: none;
   margin: 16px;
   marker: none;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: var(--secondary);
+  }
 }
 
