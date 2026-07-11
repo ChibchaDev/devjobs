@@ -1,13 +1,12 @@
 import jobs from '../jobs.json' with { type: 'json' }
-import { DEFAULTS } from "../config.js"
 
 export class JobModel {
-    static async getAll({ text, title, level, limit = DEFAULTS.LIMIT_PAGINATION, technology, offset = DEFAULTS.LIMIT_OFFSET }){
+    static async getAll({ text, title, level, limit = 10, technology, offset = 0 }){
         let filteredJobs = jobs
 
         if(text) {
             const searchTerm = text.toLowerCase()
-            filteredJobs = filteredJobs.filter(jobs =>
+            filteredJobs = filteredJobs.filter(job =>
                 job.titulo.toLowerCase().includes(searchTerm) || job.descripcion.toLowerCase().includes(searchTerm)
             )
         }
@@ -21,9 +20,10 @@ export class JobModel {
         const limitNumber = Number(limit)
         const offsetNumber = Number(offset)
         
+        const total = filteredJobs.length
         const paginatedJobs = filteredJobs.slice(offsetNumber, offsetNumber + limitNumber)
 
-        return paginatedJobs
+        return {data: paginatedJobs, total}
     }
 
     static async getById(id) {

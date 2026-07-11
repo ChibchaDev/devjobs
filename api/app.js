@@ -1,4 +1,4 @@
-import express, { response } from 'express'
+import express from 'express'
 import { jobsRouter } from './routes/jobs.js'
 import { corsMiddleware } from './middlewares/cors.js'
 import { DEFAULTS } from './config.js'

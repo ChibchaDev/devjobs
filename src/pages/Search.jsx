@@ -18,20 +18,18 @@ const useFilters = () => {
     }
   })
 
-
+  
 
   const [textToFilter, setTextToFilter] = useState(() => searchParams.get('text') || '')
   const [currentPage, setCurrentPage] = useState(() =>{
     const searchParams = new URLSearchParams(window.location.search)
     const page = Number(searchParams.get('page'))
     return Number.isNaN(page) ? page : 1
-  });
+  })
 
   const [jobs, setJobs] = useState([])
   const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(true)
-
-  const { navigateTo } = useRouter()
 
   useEffect(() =>{
     async function fetchJobs() {
@@ -50,9 +48,10 @@ const useFilters = () => {
 
         const queryParams = searchParams.toString()
 
-        const response = await fetch(`https://jscamp-api.vercel.app/api/jobs?${queryParams}`)
+        const response = await fetch(`https://api-jobs-five.vercel.app/jobs?${queryParams}`)
         const json = await response.json()
 
+        
         setJobs(json.data)
         setTotal(json.total)
       } catch (error) {
@@ -63,25 +62,37 @@ const useFilters = () => {
     }
 
     fetchJobs()
+
+    
   }, [filters, textToFilter, currentPage])
 
   useEffect(() =>{
-    setSearchParams((params) =>{
-      if (textToFilter) searchParams.set('text', textToFilter)
-      if (filters.technology) searchParams.set('technology', filters.technology)
-      if (filters.location) searchParams.set('type', filters.location)
-      if (filters.experienceLevel) searchParams.set('level', filters.experienceLevel)
-      
-      if (currentPage > 1) searchParams.set('page', currentPage)
-      
-      const newUrl = searchParams.toString()
-        ? `${window.location.pathname}?${searchParams.toString()}`
-        : window.location.pathname
-      
+    setSearchParams(() =>{
+
+      const params = new URLSearchParams()
+      if (textToFilter) {
+        params.set('text', textToFilter)
+      }
+
+      if (filters.technology) {
+        params.set('technology', filters.technology)
+      }
+
+      if (filters.location) {
+        params.set('type', filters.location)
+      }
+
+      if (filters.experienceLevel) {
+        params.set('level', filters.experienceLevel)
+      }
+
+      if (currentPage > 1) {
+        params.set('page', currentPage)
+      } 
+
       return params
     })
-    
-  }, [filters, textToFilter, currentPage, setSearchParams])
+}, [filters, textToFilter, currentPage, setSearchParams])
 
   const totalPages = Math.ceil(total / RESULTS_PER_PAGE);
 
@@ -100,6 +111,7 @@ const useFilters = () => {
   }
 
   return{
+    filters,
     jobs,
     loading,
     total,
@@ -114,6 +126,7 @@ const useFilters = () => {
 
 export default function SearchPage() {
   const {
+    filters,
     jobs,
     loading,
     total,
@@ -128,7 +141,7 @@ export default function SearchPage() {
   const title = loading 
   ? `Cargando... - DevJobs` 
   : `Resultados ${total}, Pagina ${currentPage} - DevJobs`
-  
+
   return (
 
       <main>
@@ -136,6 +149,7 @@ export default function SearchPage() {
         <meta name='description' content='Explora todas las oportunidades laborales'/>
 
         <SearchFormSection 
+          initialFilters={filters}
           initialText={textToFilter} 
           onSearch={handleSearch} 
           onTextFilter={handleTextFilter} 
@@ -143,7 +157,7 @@ export default function SearchPage() {
 
         <section>
           {
-            loading ? <p>Cargando empleos</p> : <JobListings jobs={jobs} />
+            loading ? <p style={{textAlign:'center'}}>Cargando empleos...</p> : <JobListings jobs={jobs} />
           }
           
           <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />

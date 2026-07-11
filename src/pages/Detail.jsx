@@ -108,7 +108,7 @@ export default function JobDetail({ isLoggedIn }){
     const [error, setError] = useState(null)
 
     useEffect(() =>{
-        fetch(`https://jscamp-api.vercel.app/api/jobs/${jobId}`)
+        fetch(`https://api-jobs-five.vercel.app/jobs/${jobId}`)
             .then(response =>{
                 if (!response.ok) throw new Error('Job Not Found')
                 return response.json()
